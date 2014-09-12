@@ -1,4 +1,4 @@
-package nl.ica.ddoa.dda.example;
+package maven;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

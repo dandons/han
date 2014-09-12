@@ -1,4 +1,4 @@
-package nl.ica.ddoa.dda.example;
+package maven;
 
 /**
  * @author rodmiddel

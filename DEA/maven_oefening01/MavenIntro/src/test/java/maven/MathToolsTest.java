@@ -1,6 +1,6 @@
-package nl.ica.ddoa.dda.example;
+package maven;
 
-import nl.ica.ddoa.dda.example.MathTools;
+import maven.MathTools;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

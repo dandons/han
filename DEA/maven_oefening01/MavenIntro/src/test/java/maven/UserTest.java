@@ -1,8 +1,8 @@
-package nl.ica.ddoa.dda.example;
+package maven;
 
 import static junit.framework.Assert.*;
 
-import nl.ica.ddoa.dda.example.User;
+import maven.User;
 
 import org.junit.Test;
 

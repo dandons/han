@@ -1,4 +1,4 @@
-package nl.ica.ddoa.dda.reverse;
+package maven;
 
 import static org.junit.Assert.*;
 
