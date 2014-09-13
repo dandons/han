@@ -15,9 +15,14 @@ public class AmdahlTest
      *
      * @param testName name of the test case
      */
-    public AmdahlTest( String testName )
+    public AmdahlTest( String speedUp )
     {
-        super( testName );
+        super( speedUp );
+        int aantalProcessoren = 1000;
+        double sequentialPrecentage = 0.001;
+        double expected = 500;
+        double actual = Amdahl.calculateSpeedUp(aantalProcessoren, sequentialPrecentage);
+        assertEquals(expected, actual, 1); 
     }
 
     /**

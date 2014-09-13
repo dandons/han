@@ -23,6 +23,20 @@ public abstract class Amdahl {
 		return aantalProcessoren / (1 + sequentialPrecentage*(aantalProcessoren - 1));
 	}
 	
+	public static double calculateSequential(int aantalProcessoren, int speedUpFactor){
+		if(aantalProcessoren <= 0){ 						// Controle of er meer dan 1 processor is.
+			aantalProcessoren = 1;
+		}
+		double N = aantalProcessoren;
+		double S = speedUpFactor;
+
+		return (((N / (N - 1))-1)/S);
+	}
+	
+	public static double calculateEfficiency(int aantalProcessoren, double speedUpFactor){
+		return speedUpFactor/aantalProcessoren;
+	}
+	
 	
 	
 }
