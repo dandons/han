@@ -44,7 +44,7 @@ public class AmdahlTest
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
+    public void testApp()    
     {
         assertTrue( true );
     }

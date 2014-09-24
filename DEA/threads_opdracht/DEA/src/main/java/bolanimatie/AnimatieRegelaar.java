@@ -8,25 +8,28 @@ import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
 import java.util.*;
+
 import javax.swing.*;
 
 class AnimatieRegelaar extends JPanel
 		implements ActionListener
 {	// Variables
 	private BolAnimatie ba;
-	
+	boolean startstopStatus = true;
 	private JLabel richtingLabel;
 	private JTextField richtingInput;
 	private JButton richtingOk;
 	
-	private JButton stapbutton;
+	private JButton startbutton;
+	private JButton stopbutton;
 	
 	private JLabel snelheidLabel;
 	private JTextField snelheidInput;
 	private JButton snelheidOk;
 	
 	public AnimatieRegelaar(BolAnimatie b, Color bg)
-	{	ba = b;
+	{	
+		ba = b;
 		Font display = new Font("SansSerif", Font.PLAIN, 12);
 		setBackground(bg);
 	
@@ -54,14 +57,14 @@ class AnimatieRegelaar extends JPanel
 		richtingOk.setLocation(180, 20);
 		add(richtingOk);
 		
-		stapbutton = new JButton( "Stap" );
-		stapbutton.addActionListener(this);
-		stapbutton.setFont(display);
-		stapbutton.setVisible(true);
-		stapbutton.setEnabled(true);
-		stapbutton.setSize(120, 25);
-		stapbutton.setLocation(5, 200);
-		add(stapbutton);
+		startbutton = new JButton( "Start" );
+		startbutton.addActionListener(this);
+		startbutton.setFont(display);
+		startbutton.setVisible(true);
+		startbutton.setEnabled(true);
+		startbutton.setSize(120, 25);
+		startbutton.setLocation(5, 200);
+		add(startbutton);
 						
 		snelheidLabel = new JLabel("Snelheid (1-50)");
 		snelheidLabel.setFont(display);
@@ -83,27 +86,44 @@ class AnimatieRegelaar extends JPanel
 		snelheidOk.setSize(60, 24);
 		snelheidOk.setLocation(180, 300);
 		add(snelheidOk);
+		
+		stopbutton = new JButton( "Stop");
+		stopbutton.addActionListener(this);
+		stopbutton.setFont(display);
+		stopbutton.setVisible(true);
+		stopbutton.setEnabled(true);
+		stopbutton.setSize(120, 25);
+		stopbutton.setLocation(5, 240);
+		add(stopbutton);
+						
 	}
 
 // ----- Listeners, ActionListener -------
 	
-	public void actionPerformed(ActionEvent e)
-	{	if ( e.getSource() == stapbutton )
-		{	ba.paintStep();
-		} else if ( e.getSource() == richtingOk )
-		{	try
-			{	int ri = Integer.parseInt(richtingInput.getText());
+	public void actionPerformed(ActionEvent e){
+		if ( e.getSource() == stopbutton ){
+			ba.stopBall();
+			startbutton.setEnabled(!ba.getRunning());
+			stopbutton.setEnabled(ba.getRunning());
+		} else if ( e.getSource() == richtingOk ){
+			try	{
+				int ri = Integer.parseInt(richtingInput.getText());
 				ba.setRichting(ri);
-			} catch ( NumberFormatException e1 )
-			{}								// niks doen als input niet ok is...
-		} else if ( e.getSource() == snelheidOk )
-		{	int v = 0;
-			try
-			{	int s = Integer.parseInt(snelheidInput.getText());
+			} catch ( NumberFormatException e1 ){
+				// niks doen als input niet ok is...
+			}								
+		} else if ( e.getSource() == snelheidOk ){
+			int v = 0;
+			try	{	
+				int s = Integer.parseInt(snelheidInput.getText());
 				ba.setSnelheid(s);
-			} catch ( NumberFormatException e2 )
-			{}
+			} catch ( NumberFormatException e2 ){
+				
+			}
+		} else if( e.getSource() == startbutton) {
+			ba.startBall();
+			startbutton.setEnabled(!ba.getRunning());
+			stopbutton.setEnabled(ba.getRunning());
 		}
-	}
-	
+	}	
 }
