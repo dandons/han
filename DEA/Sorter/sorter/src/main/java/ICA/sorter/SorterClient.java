@@ -26,14 +26,17 @@ public class SorterClient extends UnicastRemoteObject {
 		ISorter s2 = new Sorter();
 		s1 = (ISorter)Naming.lookup("//127.0.0.1:1100/sort1");
 		s2 = (ISorter)Naming.lookup("//127.0.0.1:1100/sort2");
-		
-		int[] listOfNumbers = new int[20];
-		for(int i = 0; i < 20; i++){
+
+		System.out.println(Arrays.toString(s1.sorteer(createListOfNumbers(20))));
+		System.out.println(Arrays.toString(s2.sorteer(createListOfNumbers(100000000))));
+	}
+	
+	public int[] createListOfNumbers(int listSize){
+		int[] listOfNumbers = new int[listSize];
+		for(int i = 0; i < listSize; i++){
 			Random rn = new Random();
 			listOfNumbers[i] = rn.nextInt((1000 - -1000) + 1) + -1000; 
 		}
-
-		System.out.println(Arrays.toString(s1.sorteer(listOfNumbers)));
-		System.out.println(Arrays.toString(s2.sorteer(listOfNumbers)));
+		return listOfNumbers;
 	}
 }
