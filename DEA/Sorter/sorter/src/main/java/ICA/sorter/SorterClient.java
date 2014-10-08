@@ -5,7 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -22,13 +22,11 @@ public class SorterClient extends UnicastRemoteObject {
 	}
 	
 	public void sort() throws RemoteException, MalformedURLException, NotBoundException{
-		ISorter s1 = new Sorter();
-		ISorter s2 = new Sorter();
-		s1 = (ISorter)Naming.lookup("//127.0.0.1:1100/sort1");
-		s2 = (ISorter)Naming.lookup("//127.0.0.1:1100/sort2");
-
-		System.out.println(Arrays.toString(s1.sorteer(createListOfNumbers(20))));
-		System.out.println(Arrays.toString(s2.sorteer(createListOfNumbers(100000000))));
+		ISorter sorter = new Sorter();
+		sorter = (ISorter)Naming.lookup("//127.0.0.1:1100/sort1");
+		int[] listOfNumbers = createListOfNumbers(20);		
+		
+		sendArrayToServer(listOfNumbers, sorter);
 	}
 	
 	public int[] createListOfNumbers(int listSize){
@@ -38,5 +36,45 @@ public class SorterClient extends UnicastRemoteObject {
 			listOfNumbers[i] = rn.nextInt((1000 - -1000) + 1) + -1000; 
 		}
 		return listOfNumbers;
+	}
+	
+	public void sendArrayToServer(int[] arrayOfNumbers, ISorter serverObject) throws RemoteException {
+		ArrayList<ArrayList<Integer>> devidedNums = splitArray(arrayOfNumbers);
+		
+		for(ArrayList<Integer> listOfNums : devidedNums){
+			serverObject.sort(listOfNums);
+		}		
+	}
+	
+	
+    public ArrayList<ArrayList<Integer>> splitArray(int[] array) {
+    	final int startNum = -1000;
+        final int devideSize = 100;
+        ArrayList<ArrayList<Integer>> devidedNums = new ArrayList<ArrayList<Integer>>();
+        
+        for(int numRange = 1; numRange <= 20; numRange++){
+        	ArrayList<Integer> listOfNumbers = new ArrayList<Integer>();
+            for(int num = 0; num < array.length; num++){
+            	int highestNum = numRange*devideSize+startNum;
+            	int lowestNum = (numRange*devideSize+startNum)-devideSize;
+	        	if(array[num] <= highestNum && array[num] > lowestNum){
+	            	listOfNumbers.add(array[num]);
+	            }            	
+            }
+            devidedNums.add(listOfNumbers);
+        }
+        return devidedNums;
+    }
+    
+	public int[] receiveArrayFromServer(ISorter sorter)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}    
+    
+	public int[] combineArrayFromServer(int[] arrayOfNumbers)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

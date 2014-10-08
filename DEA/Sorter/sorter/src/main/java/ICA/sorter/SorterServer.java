@@ -9,9 +9,7 @@ public class SorterServer {
 		try {
 			LocateRegistry.createRegistry(1100);
 			Sorter sort1 = new Sorter();
-			Sorter sort2 = new Sorter();
-			Naming.bind("//127.0.0.1:1100/sort1", sort1);
-			Naming.bind("//127.0.0.1:1100/sort2", sort2);		
+			Naming.bind("//127.0.0.1:1100/sort1", sort1);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

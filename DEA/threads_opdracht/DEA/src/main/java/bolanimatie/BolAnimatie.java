@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import java.lang.Thread;
 import java.lang.Runnable;
+import java.nio.channels.InterruptedByTimeoutException;
 
 class BolAnimatie extends JPanel implements Runnable
 {	// Constants
@@ -180,9 +181,13 @@ class BolAnimatie extends JPanel implements Runnable
 	public void run() {
 		try{
 			while(running){
-				moveBol();
-				repaint();
-				Thread.sleep(sleeptime);
+				try{
+					moveBol();
+					repaint();
+					Thread.sleep(sleeptime);
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
 			}
 		}catch(Exception e){
 			System.out.println(e.getMessage());
